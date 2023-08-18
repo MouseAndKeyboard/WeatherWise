@@ -1,3 +1,9 @@
 <template>
-  <h1 class="text-3xl font-bold">Hello world!</h1>
+  <main>
+    <AppMap class="w-full h-[100vh]" />
+  </main>
 </template>
+
+<script>
+
+  </script>
