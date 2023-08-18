@@ -19,9 +19,10 @@
 
 
     <form @submit.prevent="sendMessage" class="flex items-center mt-auto h-[10vh]">
-      <button @click.prevent="transcribeAudio" class="rounded-none btn btn-md btn-primary">
+      <button @click.prevent="toggleRecording" class="rounded-none btn btn-md btn-primary">
         <div class="">
-          <MicrophoneIcon class="w-5 h-5 fill-white" />
+          <MicrophoneIcon v-if="recording" class="w-5 h-5 text-red-500" />
+          <MicrophoneIcon v-else class="w-5 h-5 fill-white" />
         </div>
 
       </button>
