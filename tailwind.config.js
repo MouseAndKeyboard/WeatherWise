@@ -10,7 +10,14 @@ export const content = [
 ];
 
 export const theme = {
-  extend: {},
+  extend: {
+    colors: {
+      primary: "#00B0FF",
+      secondary: "#FFDE59",
+      tertiary: "#FF6D00",
+      quaternary: "#FF3D00",
+    }
+  },
 };
 
 export const plugins = [];

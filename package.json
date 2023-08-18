@@ -17,8 +17,13 @@
     "tailwindcss": "^3.3.2"
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-directions": "^4.1.1",
+    "@mapbox/polyline": "^1.2.0",
+    "@pinia/nuxt": "^0.4.11",
+    "@turf/turf": "^6.5.0",
     "@types/mapbox-gl": "^2.7.11",
-    "mapbox-gl": "^2.15.0",
-    "openai": "^3.3.0"
+    "mapbox-gl": "^1.13.0",
+    "openai": "^3.3.0",
+    "pinia": "^2.1.4"
   }
 }
