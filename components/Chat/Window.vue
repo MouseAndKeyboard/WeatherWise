@@ -1,11 +1,6 @@
 <template>
-  <div class="w-full h-[100vh] shadow shadow-gray-600 rounded-lg overflow-hidden flex flex-col bg-black">
-    <header
-      class="w-full h-10 flex-none bg-gradient-to-r flex items-center justify-between px-3 from-purple-600 to-violet-600">
-      <h1 class="text-lg text-gray-50 font-semibold">CHAT</h1>
-    </header>;
-
-    <div class="messages flex flex-col h-full h-[50vh] space-y-4 w-full overflow-x-hidden overflow-y-auto py-8 scroll-smooth" ref="messageContainer">
+  <div class="flex flex-col w-full overflow-hidden bg-black shadow shadow-gray-600">
+    <div class="flex flex-col w-full h-full py-8 space-y-4 overflow-x-hidden overflow-y-auto messages scroll-smooth" ref="messageContainer">
       <Bubble v-for="(message, index) in messages" :key="index" :role="message.role">
         <span v-html="message.content">
         </span>
@@ -15,26 +10,26 @@
       </Bubble>
     </div>
 
-    <div class="flex flex-col space-y-2">
-        <button v-text="option1" @click="setOption(option1)" class="p-2 bg-blue-500 text-white rounded-md w-full"></button>
-        <button v-text="option2" @click="setOption(option2)" class="p-2 bg-blue-500 text-white rounded-md w-full"></button>
-        <button v-text="option3" @click="setOption(option3)" class="p-2 bg-blue-500 text-white rounded-md w-full"></button>
+    <div class="flex flex-col mb-2 space-y-2">
+        <button v-text="option1" @click="setOption(option1)" class="w-full p-2 text-white bg-blue-500 rounded-md"></button>
+        <button v-text="option2" @click="setOption(option2)" class="w-full p-2 text-white bg-blue-500 rounded-md"></button>
+        <button v-text="option3" @click="setOption(option3)" class="w-full p-2 text-white bg-blue-500 rounded-md"></button>
     </div>
 
 
 
     <form @submit.prevent="sendMessage" class="flex items-center mt-auto h-[10vh]">
-      <button @click.prevent="transcribeAudio" class="btn btn-md btn-primary rounded-none">
+      <button @click.prevent="transcribeAudio" class="rounded-none btn btn-md btn-primary">
         <div class="">
-          <MicrophoneIcon class="h-5 w-5 fill-white" />
+          <MicrophoneIcon class="w-5 h-5 fill-white" />
         </div>
 
       </button>
       <input v-model="messageText" type="text"
-        class="w-full py-6 px-3 h-10 bg-gray-900 text-purple-200 border border-gray-900 placeholder:text-gray-600 outline-none focus:outline-none transition-all duration-150 ease-in-out focus:border-purple-600"
+        class="w-full h-10 px-3 py-6 text-purple-200 transition-all duration-150 ease-in-out bg-gray-900 border border-gray-900 outline-none placeholder:text-gray-600 focus:outline-none focus:border-purple-600"
         placeholder="Enter your message here ..." />
-      <button class="btn btn-md btn-primary rounded-none">
-        <PaperAirplaneIcon class="h-6 w-6 fill-white -rotate-45" />
+      <button class="rounded-none btn btn-md btn-primary">
+        <PaperAirplaneIcon class="w-6 h-6 -rotate-45 fill-white" />
       </button>
     </form>
   </div>
