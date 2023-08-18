@@ -65,6 +65,9 @@ const option3 = ref(firstQuestionStuff[3].content)
 
 const messageContainer = ref();
 
+const recording = ref(false);
+const mediaRecorderRef = ref<MediaRecorder | null>(null); // Reference to the MediaRecorder object
+
 async function sendMessage() {
   console.log(messageText);
   if (!messageText.value.trim()) {
@@ -94,11 +97,66 @@ async function sendMessage() {
 }
 
 
-function transcribeAudio( ) {
-
-  messageText.value = "Transcribing audio..."
-  return
+function toggleRecording() {
+  if (recording.value) {
+    stopRecording();
+  } else {
+    startRecording();
+    messageText.value = "Transcribing audio..."
+  }
 }
+
+function startRecording() {
+  navigator.mediaDevices.getUserMedia({ audio: true })
+    .then((stream) => {
+      const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      const chunks = [];
+
+      mediaRecorder.addEventListener('dataavailable', (event) => {
+        chunks.push(event.data);
+      });
+
+      mediaRecorder.addEventListener('stop', async () => {
+        const blob = new Blob(chunks, { type: 'audio/webm' });
+
+        messageText.value = await transcribe(new File([blob], "audio.webm"));
+      });
+
+          mediaRecorderRef.value = mediaRecorder;
+          mediaRecorder.start();
+          recording.value = true;
+        })
+        .catch((error) => {
+          console.error('Error accessing microphone:', error);
+        });
+}
+
+function stopRecording() {
+      recording.value = false;
+      if (mediaRecorderRef.value) {
+        mediaRecorderRef.value.stop();
+        mediaRecorderRef.value = null;
+      }
+}
+
+async function transcribe(file) {
+		const formData = new FormData();
+		formData.append("file",file);
+		formData.append("model","whisper-1");
+		formData.append("language","en");
+		const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
+		  headers: {
+			Authorization: "Bearer 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",
+		  },
+		  method: "POST",
+		  body: formData
+		});
+
+		const transcript = await res.json();
+		
+		return transcript.text;
+}
+
 
 async function callAI(messages: Message[]) {    
   return await bot.nextStep()
