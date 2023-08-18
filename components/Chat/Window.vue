@@ -15,7 +15,7 @@
       </Bubble>
     </div>
 
-    <div class="flex flex-col space-y-2 h-[30vh]">
+    <div class="flex flex-col space-y-2">
         <button v-text="option1" @click="setOption(option1)" class="p-2 bg-blue-500 text-white rounded-md w-full"></button>
         <button v-text="option2" @click="setOption(option2)" class="p-2 bg-blue-500 text-white rounded-md w-full"></button>
         <button v-text="option3" @click="setOption(option3)" class="p-2 bg-blue-500 text-white rounded-md w-full"></button>
@@ -50,8 +50,8 @@ import { list } from "postcss";
 const chatbotStore = useChatbotStore()
 const bot = chatbotStore.getBot
 bot.initialise();
-// await bot.nextStep();
-// const firstQuestionStuff = await bot.nextStep();
+await bot.nextStep();
+const firstQuestionStuff = await bot.nextStep();
 
 const typing=ref(false)
 
