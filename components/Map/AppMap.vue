@@ -9,6 +9,10 @@ import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-direct
 import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
 import fireArea from "@/data/fire_area.json";
+import emergencyWarningArea from "@/data/emergency_warning_area.json";
+import watchAndActArea from "@/data/watch_and_act_area.json";
+import adviceArea from "@/data/advice_area.json";
+import messageWarnings from "@/data/message_warnings.json";
 import * as turf from "@turf/turf";
 import * as polyline from "@mapbox/polyline";
 import { MapStatus, useMapStore } from "@/stores/mapStore";
@@ -50,9 +54,39 @@ onMounted(() => {
   map.scrollZoom.enable();
 
   map.on("load", () => {
+    setTimeout(() => {
+      map.flyTo({
+        center: mapStore.getRoute.start,
+        zoom: 6,
+      });
+    }, 1000);
+    const { $event, $listen } = useNuxtApp();
+
+    $listen("focusSelf", () => {
+      map.flyTo({
+        center: mapStore.getRoute.start,
+        zoom: 12,
+        essential: true,
+      });
+    });
     map.addSource("fireArea", {
       type: "geojson",
       data: fireArea as GeoJSON.FeatureCollection<GeoJSON.Geometry>,
+    });
+
+    map.addSource("emergencyWarning", {
+      type: "geojson",
+      data: emergencyWarningArea as GeoJSON.FeatureCollection<GeoJSON.Geometry>,
+    });
+
+    map.addLayer({
+      id: "emergencyWarning",
+      type: "fill",
+      source: "emergencyWarning",
+      paint: {
+        "fill-color": "#D42028",
+        "fill-opacity": 0.8,
+      },
     });
 
     map.addLayer({
@@ -61,9 +95,47 @@ onMounted(() => {
       source: "fireArea",
       paint: {
         "fill-color": "#000000",
+        "fill-opacity": 1,
+      },
+    });
+
+    map.addSource("watchAndAct", {
+      type: "geojson",
+      data: watchAndActArea as GeoJSON.FeatureCollection<GeoJSON.Geometry>,
+    });
+
+    map.addLayer({
+      id: "watchAndAct",
+      type: "fill",
+      source: "watchAndAct",
+      paint: {
+        "fill-color": "#F27921",
         "fill-opacity": 0.8,
       },
     });
+
+    map.addSource("advice", {
+      type: "geojson",
+      data: adviceArea as GeoJSON.FeatureCollection<GeoJSON.Geometry>,
+    });
+
+    map.addLayer({
+      id: "advice",
+      type: "fill",
+      source: "advice",
+      paint: {
+        "fill-color": "#F9DF2C",
+        "fill-opacity": 0.8,
+      },
+    });
+
+    const el = document.createElement("div");
+    el.className =
+      "marker w-4 h-4 bg-blue-500 rounded-full border-2 border-white";
+
+    new mapboxgl.Marker({ color: "green" })
+      .setLngLat(messageWarnings.features[0].geometry.coordinates)
+      .addTo(map);
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -95,9 +167,10 @@ onMounted(() => {
     ]);
 
     // convert to turf polygon
-    const fireAreaPolygon = turf.polygon(
-      fireArea.features[0].geometry.coordinates
+    const obstacle = turf.polygon(
+      emergencyWarningArea.features[0].geometry.coordinates
     );
+
     map.addSource("theRoute", {
       type: "geojson",
       data: {
@@ -166,10 +239,7 @@ onMounted(() => {
           map.getSource("theRoute").setData(routeLine);
           map.getSource("theBox").setData(polygon);
 
-          const isIntersection = !turf.booleanDisjoint(
-            fireAreaPolygon,
-            routeLine
-          );
+          const isIntersection = !turf.booleanDisjoint(obstacle, routeLine);
 
           if (isIntersection) {
             // Collision occurred, so increment the counter
@@ -191,7 +261,6 @@ onMounted(() => {
           }
         }
       } else {
-        // We've tried 100 times, so give up
         directions.removeRoutes();
       }
     });
