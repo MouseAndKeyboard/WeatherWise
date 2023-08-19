@@ -43,10 +43,12 @@ import { MicrophoneIcon } from "@heroicons/vue/24/solid"
 
 import { useChatbotStore } from "@/stores/chatbotStore"
 import { list } from "postcss";
+import { ChatCompletionRequestMessage } from "openai";
 import { onMounted } from 'vue'
 
 const chatbotStore = useChatbotStore()
 const bot = chatbotStore.getBot
+
 
 const firstQuestionStuff = ref([
         {'role': 'assistant', 'content': "ChatGPT is thinking..."},
@@ -64,7 +66,7 @@ type Message = {
 
 const messageText = ref("");
 
-const messages = ref<Message[]>([{role: 'assistant', 'content': firstQuestionStuff.value[0].content}]);
+const messages = ref<ChatCompletionRequestMessage[]>([{role: 'assistant', 'content': firstQuestionStuff.value[0].content}]);
 
 const option1 = ref(firstQuestionStuff.value[1].content)
 const option2 = ref(firstQuestionStuff.value[2].content)
@@ -165,12 +167,12 @@ async function transcribe(file) {
 }
 
 
-async function callAI(messages: Message[]) {
+async function callAI(messages: ChatCompletionRequestMessage[]) {
   option1.value = "..."
   option2.value = "..."
   option3.value = "..."
   
-  return await bot.nextStep()
+  return await bot.nextStep(messages)
 }
 
 function setOption(option: string) {

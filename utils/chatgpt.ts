@@ -115,7 +115,7 @@ class ChatInstance {
   chatHistory: ChatCompletionRequestMessage[];
   openai: OpenAIApi | undefined;
   messageContext: MessageContext;
-  phase: 'waiting' | 'learning' | 'reccomending';
+  phase: 'waiting' | 'learning' | 'reccomending' | 'chatting';
   questions: string[];
   allSampleResponses: { [char: string]: string[] };
   currentQuestionIndex: number;
@@ -140,7 +140,7 @@ class ChatInstance {
     this.chatHistory.push({ role: 'user', content: message });
   }
 
-  getInitialMessage(): ChatCompletionRequestMessage {
+  getInitialMessage(demandQuestions = false): ChatCompletionRequestMessage {
     let initialPrompt = "I'm currently in a situation where ";
 
     switch (this.messageContext.threatLevel) {
@@ -366,8 +366,10 @@ class ChatInstance {
       }
     }
 
-    initialPrompt += '\nWith that context, please ask me the most important 4 questions about my personal situation so that you know how to recommend an evacuation path. Please aim to ask questions which will be helpful in tailoring your recommendations.With that context, please ask me the most important 4 questions about my current situation to prepare me for the fire/fire evacuation. Please format as dotpoints.';
-
+    if (demandQuestions) {
+      initialPrompt += '\nWith that context, please ask me the most important 4 questions about my personal situation so that you know how to recommend an evacuation path. Please aim to ask questions which will be helpful in tailoring your recommendations.With that context, please ask me the most important 4 questions about my current situation to prepare me for the fire/fire evacuation. Please format as dotpoints.';
+    }
+    
     const message: ChatCompletionRequestMessage = {
       role: 'user',
       content: initialPrompt,
@@ -376,16 +378,16 @@ class ChatInstance {
     return message;
   }
 
-  async nextStep() {
+  async nextStep(chathiztory: ChatCompletionRequestMessage[] = []) {
     if (this.phase === 'waiting') {
-      const initialPrompt = this.getInitialMessage();
+      const initialPrompt = this.getInitialMessage(true);
       if (!this.openai) {
         return;
       }
       const messageHist = [initialPrompt];
 
       console.log(messageHist);
-      
+
 
       const response = await runCompletion(this.openai, messageHist)
 
@@ -417,27 +419,67 @@ class ChatInstance {
         this.questions = questions;
         this.allSampleResponses = allSampleResponses;
       }
-      
+
       this.phase = 'learning';
     } else if (this.phase === 'learning') {
 
       const question = this.questions[this.currentQuestionIndex];
       const sampleResponses = this.allSampleResponses[question];
-            
+
       this.currentQuestionIndex += 1;
       if (this.currentQuestionIndex >= this.questions.length) {
         this.phase = 'reccomending';
       }
 
       return [
-        {'role': 'assistant', 'content': question},
-        {'role': 'assistant', 'content': sampleResponses[0]},
-        {'role': 'assistant', 'content': sampleResponses[1]},
-        {'role': 'assistant', 'content': sampleResponses[2]}, 
+        { 'role': 'assistant', 'content': question },
+        { 'role': 'assistant', 'content': sampleResponses[0] },
+        { 'role': 'assistant', 'content': sampleResponses[1] },
+        { 'role': 'assistant', 'content': sampleResponses[2] },
       ]
 
     } else if (this.phase === 'reccomending') {
-      this.phase = 'waiting';
+      const promp: ChatCompletionRequestMessage = { role: 'user', content: 'I have finished answering all the questions. Please recommend me an evacuation plan. There are 3 possible evac points: 12 Dale Road, 16 Main St, 10 Hay St.' }
+      chathiztory.push(promp);
+
+      const reccomendation = await runCompletion(this.openai, chathiztory);
+      const three: ChatCompletionRequestMessage[] = [promp, { 'role': 'assistant', 'content': reccomendation?.content }, {'role': 'user', 'content': 'Okay, based on this plan, please come up with 3 possible follow up questions. Dot points only.'}];
+      const rezult = await runCompletion(this.openai, three);
+
+      console.log(reccomendation);
+      console.log(rezult);
+
+      const butts = rezult?.content?.split('\n') || [];      
+
+      console.log("ASDSASDAS")
+      console.log(butts)
+
+      this.phase = 'chatting';
+      return [
+        reccomendation,
+        { 'role': 'assistant', 'content': butts[0] },
+        { 'role': 'assistant', 'content': butts[1] },
+        { 'role': 'assistant', 'content': butts[2] },
+      ]
+    } else if (this.phase === 'chatting') {
+      console.log("KKKKKKKKKKKKKKKKK");
+
+      const history: ChatCompletionRequestMessage[] = [this.getInitialMessage(false), ...chathiztory];
+      console.log(history);
+      console.log("history above")
+      const response: ChatCompletionRequestMessage = await runCompletion(this.openai, history);
+      const sugg: ChatCompletionRequestMessage = await runCompletion(this.openai, [...chathiztory, response, { 'role': 'user', 'content': 'Okay based on this, please come up with 3 follow up questions. Dot points only.' }]);
+
+      console.log(response);
+      console.log(sugg);
+
+      const butts = sugg?.content?.split('\n') || [];
+
+      return [response,
+        { 'role': 'assistant', 'content': butts[0] },
+        { 'role': 'assistant', 'content': butts[1] },
+        { 'role': 'assistant', 'content': butts[2] },
+      ];
     }
 
     // const initialPrompt = this.getInitialMessage();
