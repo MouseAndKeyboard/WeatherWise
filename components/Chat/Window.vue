@@ -1,14 +1,19 @@
 <template>
   <div class="flex flex-col w-full overflow-hidden bg-[#e1e1e1]">
     <div class="flex flex-col w-full h-full py-8 space-y-4 overflow-x-hidden overflow-y-auto messages scroll-smooth" ref="messageContainer">
-      <Bubble v-for="(message, index) in messages" :key="index" :role="message.role">
-        <span v-html="message.content">
-        </span>
+      <Bubble 
+        v-for="(message, index) in filteredMessages" 
+        :key="index" 
+        :role="message.role" 
+      >
+        <span v-html="message.content"></span>
+        <br />
         <button v-if="message.hasbutton" @click="genroutehandler()" class="btn btn-md btn-primary">Generate Evacuation Route</button>
       </Bubble>
       <Bubble v-if="typing" role="assistant">
         <Typing />
       </Bubble>
+
     </div>
 
     <div class="flex flex-col mb-2 space-y-2">
@@ -29,10 +34,11 @@
       </button>
       <input v-model="messageText" type="text"
         class="w-full h-10 px-3 py-6 text-black transition-all duration-150 ease-in-out bg-gray-50 border border-gray-500 outline-none placeholder:text-gray-600 focus:outline-none focus:border-gray-900"
-        placeholder="Enter your message here ..." 
+        placeholder="Enter your message here ..."
         @keydown.enter.prevent="sendMessage"/>
       <button class="rounded-none btn btn-md btn-primary bg-blue-400 border border-blue-800 hover:bg-blue-500">
-        <PaperAirplaneIcon class="w-6 h-6 -rotate-45 fill-white" />
+        <PaperAirplaneIcon v-if="typing" class="w-6 h-6 -rotate-45 text-gray-500" />
+        <PaperAirplaneIcon v-else class="w-6 h-6 -rotate-45 fill-white" />
       </button>
     </form>
   </div>
@@ -45,14 +51,15 @@ import { MicrophoneIcon } from "@heroicons/vue/24/solid"
 import { useChatbotStore } from "@/stores/chatbotStore"
 import { list } from "postcss";
 import { ChatCompletionRequestMessage } from "openai";
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 
 const chatbotStore = useChatbotStore()
 const bot = chatbotStore.getBot
 
-
 const firstQuestionStuff = ref([
-        {'role': 'assistant', 'content': "ChatGPT is thinking..."},
+        {'role': 'assistant', 'content': ""},
+
+
         {'role': 'assistant', 'content': "..."},
         {'role': 'assistant', 'content': "..."},
         {'role': 'assistant', 'content': "..."}, 
@@ -64,6 +71,8 @@ type Message = {
   role: string;
   content: string;
 };
+
+const filteredMessages = computed(() => messages.value.filter(message => message.content.trim().length > 0));
 
 const messageText = ref("");
 
@@ -209,10 +218,11 @@ onMounted(async () => {
 
   typing.value = false
 
-  messages.value = [{role: 'assistant', 'content': firstQuestionStuff.value[0].content}];
-  option1.value = firstQuestionStuff.value[1].content;
-  option2.value = firstQuestionStuff.value[2].content;
-  option3.value = firstQuestionStuff.value[3].content;
+  messages.value = [{role: 'assistant', 'content': firstQuestionStuff.value[0].content.replace(/^[^a-zA-Z]*/, '')}];
+  option1.value = firstQuestionStuff.value[1].content.replace(/^[^a-zA-Z]*/, '');
+  option2.value = firstQuestionStuff.value[2].content.replace(/^[^a-zA-Z]*/, '');
+  option3.value = firstQuestionStuff.value[3].content.replace(/^[^a-zA-Z]*/, '');
+
 
 })
 </script>

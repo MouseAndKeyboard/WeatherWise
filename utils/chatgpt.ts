@@ -440,10 +440,10 @@ class ChatInstance {
       }
 
       return [
-        { 'role': 'assistant', 'content': question },
-        { 'role': 'assistant', 'content': sampleResponses[0] },
-        { 'role': 'assistant', 'content': sampleResponses[1] },
-        { 'role': 'assistant', 'content': sampleResponses[2] },
+        {'role': 'assistant', 'content': question.replace(/^[^a-zA-Z]*/, '')},
+        {'role': 'assistant', 'content': sampleResponses[0].replace(/^[^a-zA-Z]*/, '')},
+        {'role': 'assistant', 'content': sampleResponses[1].replace(/^[^a-zA-Z]*/, '')},
+        {'role': 'assistant', 'content': sampleResponses[2].replace(/^[^a-zA-Z]*/, '')}, 
       ]
 
     } else if (this.phase === 'reccomending') {
