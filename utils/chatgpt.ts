@@ -123,7 +123,7 @@ class ChatInstance {
   chatHistory: ChatCompletionRequestMessage[];
   openai: OpenAIApi | undefined;
   messageContext: MessageContext;
-  phase: 'waiting' | 'learning' | 'reccomending' | 'chatting';
+  phase: 'waiting' | 'learning' | 'recommending' | 'chatting';
   questions: string[];
   allSampleResponses: { [char: string]: string[] };
   currentQuestionIndex: number;
@@ -436,7 +436,7 @@ class ChatInstance {
 
       this.currentQuestionIndex += 1;
       if (this.currentQuestionIndex >= this.questions.length) {
-        this.phase = 'reccomending';
+        this.phase = 'recommending';
       }
 
       return [
@@ -446,15 +446,15 @@ class ChatInstance {
         {'role': 'assistant', 'content': sampleResponses[2].replace(/^[^a-zA-Z]*/, '')}, 
       ]
 
-    } else if (this.phase === 'reccomending') {
+    } else if (this.phase === 'recommending') {
       const promp: ChatCompletionRequestMessage = { role: 'user', content: 'I have finished answering all the questions. Please recommend me an evacuation plan. There are 3 possible evac points: 12 Dale Road, 16 Main St, 10 Hay St.' }
       chathiztory.push(promp);
 
-      const reccomendation = await runCompletion(this.openai, chathiztory);
-      const three: ChatCompletionRequestMessage[] = [promp, { 'role': 'assistant', 'content': reccomendation?.content }, {'role': 'user', 'content': 'Okay, based on this plan, please come up with 3 possible follow up questions. Dot points only.'}];
+      const recommendation = await runCompletion(this.openai, chathiztory);
+      const three: ChatCompletionRequestMessage[] = [promp, { 'role': 'assistant', 'content': recommendation?.content }, {'role': 'user', 'content': 'Okay, based on this plan, please come up with 3 possible follow up questions. Dot points only.'}];
       const rezult = await runCompletion(this.openai, three);
 
-      console.log(reccomendation);
+      console.log(recommendation);
       console.log(rezult);
 
       const butts = rezult?.content?.split('\n') || [];      
@@ -464,7 +464,7 @@ class ChatInstance {
 
       this.phase = 'chatting';
       return [
-        reccomendation,
+        recommendation,
         { 'role': 'assistant', 'content': butts[0] },
         { 'role': 'assistant', 'content': butts[1] },
         { 'role': 'assistant', 'content': butts[2] },

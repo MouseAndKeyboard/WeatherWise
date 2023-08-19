@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import mapboxgl, { LngLat } from "mapbox-gl";
+import mapboxgl, { LngLat, LngLatLike } from "mapbox-gl";
 import { onMounted } from "vue";
 import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -54,12 +54,15 @@ onMounted(() => {
   map.scrollZoom.enable();
 
   map.on("load", () => {
-    setTimeout(() => {
-      map.flyTo({
-        center: mapStore.getRoute.start,
-        zoom: 6,
-      });
-    }, 1000);
+    if (mapStore.status == MapStatus.INITIAL) {
+      setTimeout(() => {
+        map.flyTo({
+          center: mapStore.getRoute.start,
+          zoom: 6,
+        });
+      }, 1000);
+    }
+
     const { $event, $listen } = useNuxtApp();
 
     $listen("focusSelf", () => {
@@ -134,7 +137,7 @@ onMounted(() => {
       "marker w-4 h-4 bg-blue-500 rounded-full border-2 border-white";
 
     new mapboxgl.Marker({ color: "green" })
-      .setLngLat(messageWarnings.features[0].geometry.coordinates)
+      .setLngLat(messageWarnings.features[0].geometry.coordinates as LngLatLike)
       .addTo(map);
 
     navigator.geolocation.getCurrentPosition(
@@ -226,7 +229,7 @@ onMounted(() => {
       map.setLayoutProperty("theRoute", "visibility", "none");
       map.setLayoutProperty("theBox", "visibility", "none");
 
-      if (counter < 2) {
+      if (counter < 100) {
         // Make each route visible
         for (const route of e.route) {
           map.setLayoutProperty("theRoute", "visibility", "visible");

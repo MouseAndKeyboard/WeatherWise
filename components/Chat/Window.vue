@@ -25,7 +25,7 @@
 
 
     <form @submit.prevent="sendMessage" class="flex items-center mt-auto h-[10vh]">
-      <button @click.prevent="toggleRecording" class="rounded-none btn btn-md btn-primary bg-blue-400 border border-blue-800 hover:bg-blue-500">
+      <button @click.prevent="toggleRecording" class="bg-blue-400 border border-blue-800 rounded-none btn btn-md btn-primary hover:bg-blue-500">
         <div class="">
           <MicrophoneIcon v-if="recording" class="w-5 h-5 text-red-500" />
           <MicrophoneIcon v-else class="w-5 h-5 fill-white" />
@@ -33,11 +33,11 @@
 
       </button>
       <input v-model="messageText" type="text"
-        class="w-full h-10 px-3 py-6 text-black transition-all duration-150 ease-in-out bg-gray-50 border border-gray-500 outline-none placeholder:text-gray-600 focus:outline-none focus:border-gray-900"
+        class="w-full h-10 px-3 py-6 text-black transition-all duration-150 ease-in-out border border-gray-500 outline-none bg-gray-50 placeholder:text-gray-600 focus:outline-none focus:border-gray-900"
         placeholder="Enter your message here ..."
         @keydown.enter.prevent="sendMessage"/>
-      <button class="rounded-none btn btn-md btn-primary bg-blue-400 border border-blue-800 hover:bg-blue-500">
-        <PaperAirplaneIcon v-if="typing" class="w-6 h-6 -rotate-45 text-gray-500" />
+      <button class="bg-blue-400 border border-blue-800 rounded-none btn btn-md btn-primary hover:bg-blue-500">
+        <PaperAirplaneIcon v-if="typing" class="w-6 h-6 text-gray-500 -rotate-45" />
         <PaperAirplaneIcon v-else class="w-6 h-6 -rotate-45 fill-white" />
       </button>
     </form>
@@ -52,6 +52,8 @@ import { useChatbotStore } from "@/stores/chatbotStore"
 import { list } from "postcss";
 import { ChatCompletionRequestMessage } from "openai";
 import { onMounted, computed } from 'vue'
+import { MapStatus, useMapStore } from "@/stores/mapStore";
+import { LngLat } from "mapbox-gl";
 
 const chatbotStore = useChatbotStore()
 const bot = chatbotStore.getBot
@@ -102,7 +104,7 @@ async function sendMessage() {
     messageContainer.value.scrollTop = messageContainer.value.scrollHeight;
   }, 500)
 
-  let b = bot.phase == "reccomending"
+  let b = bot.phase == "recommending"
   let received = await callAI(messages.value);
 
   if (b) {
@@ -199,7 +201,11 @@ function setOption(option: string) {
 }
 
 function genroutehandler() {
+  const mapStore = useMapStore()
+  mapStore.setStatus(MapStatus.GENERATE_ROUTE)
+  mapStore.setEnd(new LngLat(115.855991,-31.955817))
   console.log("generating route")
+
   useRouter().push('/')
 }
 
