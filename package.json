@@ -24,7 +24,7 @@
     "@pinia/nuxt": "^0.4.11",
     "@turf/turf": "^6.5.0",
     "@types/mapbox-gl": "^2.7.11",
-    "mapbox-gl": "^1.13.0",
+    "mapbox-gl": "^2.15.0",
     "mitt": "^3.0.0",
     "openai": "^3.3.0",
     "pinia": "^2.1.4",
