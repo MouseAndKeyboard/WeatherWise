@@ -30,7 +30,8 @@
         class="w-full h-10 px-3 py-6 text-purple-200 transition-all duration-150 ease-in-out bg-gray-900 border border-gray-900 outline-none placeholder:text-gray-600 focus:outline-none focus:border-purple-600"
         placeholder="Enter your message here ..." />
       <button class="rounded-none btn btn-md btn-primary">
-        <PaperAirplaneIcon class="w-6 h-6 -rotate-45 fill-white" />
+        <PaperAirplaneIcon v-if="typing" class="w-6 h-6 -rotate-45 text-gray-500" />
+        <PaperAirplaneIcon v-else class="w-6 h-6 -rotate-45 fill-white" />
       </button>
     </form>
   </div>
@@ -42,14 +43,19 @@ import { MicrophoneIcon } from "@heroicons/vue/24/solid"
 
 import { useChatbotStore } from "@/stores/chatbotStore"
 import { list } from "postcss";
+import { onMounted } from 'vue'
 
 const chatbotStore = useChatbotStore()
 const bot = chatbotStore.getBot
-bot.initialise();
-await bot.nextStep();
-const firstQuestionStuff = await bot.nextStep();
 
-const typing=ref(false)
+const firstQuestionStuff = ref([
+        {'role': 'assistant', 'content': "ChatGPT is thinking..."},
+        {'role': 'assistant', 'content': "..."},
+        {'role': 'assistant', 'content': "..."},
+        {'role': 'assistant', 'content': "..."}, 
+      ])
+
+const typing=ref(true)
 
 type Message = {
   role: string;
@@ -58,11 +64,11 @@ type Message = {
 
 const messageText = ref("");
 
-const messages = ref<Message[]>([{role: 'assistant', 'content': firstQuestionStuff[0].content}]);
+const messages = ref<Message[]>([{role: 'assistant', 'content': firstQuestionStuff.value[0].content}]);
 
-const option1 = ref(firstQuestionStuff[1].content)
-const option2 = ref(firstQuestionStuff[2].content)
-const option3 = ref(firstQuestionStuff[3].content)
+const option1 = ref(firstQuestionStuff.value[1].content)
+const option2 = ref(firstQuestionStuff.value[2].content)
+const option3 = ref(firstQuestionStuff.value[3].content)
 
 const messageContainer = ref();
 
@@ -71,7 +77,7 @@ const mediaRecorderRef = ref<MediaRecorder | null>(null); // Reference to the Me
 
 async function sendMessage() {
   console.log(messageText);
-  if (!messageText.value.trim()) {
+  if (!messageText.value.trim() || typing.value) {
     // messageText.value is empty or only contains whitespace, so return early to prevent sending the message
     return;
   }
@@ -159,7 +165,11 @@ async function transcribe(file) {
 }
 
 
-async function callAI(messages: Message[]) {    
+async function callAI(messages: Message[]) {
+  option1.value = "..."
+  option2.value = "..."
+  option3.value = "..."
+  
   return await bot.nextStep()
 }
 
@@ -167,4 +177,25 @@ function setOption(option: string) {
   messageText.value = option
 }
 
+function log(typing: boolean) {
+  console.log(typing)
+}
+
+onMounted(async () => {
+  // Initialize chatbot and move to first step
+  bot.initialise()
+
+  await bot.nextStep()
+
+  // Fetch and update the actual value
+  firstQuestionStuff.value = await bot.nextStep()
+
+  typing.value = false
+
+  messages.value = [{role: 'assistant', 'content': firstQuestionStuff.value[0].content}];
+  option1.value = firstQuestionStuff.value[1].content;
+  option2.value = firstQuestionStuff.value[2].content;
+  option3.value = firstQuestionStuff.value[3].content;
+
+})
 </script>
