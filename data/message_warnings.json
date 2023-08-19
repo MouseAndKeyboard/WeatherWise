@@ -6,17 +6,779 @@
       "geometry": {
         "type": "Point",
         "sm_coordinates": "no",
-        "coordinates": [152.86263, -27.95028]
+        "coordinates": [
+          148.03656199999998,
+          -25.853551999999993
+        ]
       },
       "properties": {
-        "messageId": "bwa_404408387",
-        "subject": "Bushfire EMERGENCY WARNING for parts of BAILUP, GIDGEGANNUP, MILLENDON, WALYUNGA NATIONAL PARK, UPPER SWAN, HOVEA, LOWER CHITTERING, STRATTON, AVON VALLEY NATIONAL PARK, WUNDOWIE, MIDDLE SWAN, RED HILL, BELHUS, BASKERVILLE, HERNE HILL, CHIDLOW, BULLSBROOK, WOOROLOO, BRIGADOON in the SHIRES OF MUNDARING, CHITTERING and NORTHAM and the CITY OF SWAN",
-        "incidentEventsId": "2110640",
-        "headline": "parts of GIDGEGANNUP, STONEVILLE, MOUNT HELENA, CHIDLOW, LOWER CHITTERING, MUCHEA and BULLSBROOK in the SHIRES OF MUNDARING and CHITTERING and the CITY OF SWAN",
-        "locationSuburb": "in an area bounded by Toodyay Road to the north, Lilydale Road to the east, Stone Street and Anketell Road to the south and Stoneville Road to the west and north of the emergency warning area bounded by Muchea East Road to the north, Chittering Road to the east and south and Great Northern Highway to the west in parts of GIDGEGANNUP, STONEVILLE, MOUNT HELENA, CHIDLOW, LOWER CHITTERING, MUCHEA and BULLSBROOK in the SHIRES OF MUNDARING and CHITTERING and the CITY OF SWAN",
-        "fcadId": "512758",
-        "type": "Bushfire Watch and Act",
-        "lastUpdatedTime": "01/02/21 11:43:48 PM"
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          153.436089,
+          -27.63732499999999
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE PERMITTED BURN",
+        "OBJECTID": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          152.347694,
+          -28.204959999999993
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE PERMITTED BURN",
+        "OBJECTID": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          151.82302,
+          -26.864256000000022
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          152.142804,
+          -28.006125000000004
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          145.565567,
+          -16.66181200000001
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE PERMITTED BURN",
+        "OBJECTID": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          152.19656199999997,
+          -27.442787000000003
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          146.682815,
+          -19.385172000000004
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          150.068348,
+          -26.357141
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 9
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          151.943557,
+          -26.309684000000015
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 10
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          150.96669400000002,
+          -24.281932999999995
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 11
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          145.698691,
+          -17.212933999999994
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE PERMITTED BURN",
+        "OBJECTID": 12
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          151.437243,
+          -25.027893
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 13
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          147.23126,
+          -23.65608
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 14
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          152.266278,
+          -24.937618000000022
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          152.65789400000003,
+          -26.692448000000013
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          145.014712,
+          -15.756310000000001
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE PERMITTED BURN",
+        "OBJECTID": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          145.17254299999996,
+          -16.573243000000005
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE PERMITTED BURN",
+        "OBJECTID": 18
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          145.17254299999996,
+          -16.573243000000005
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE PERMITTED BURN",
+        "OBJECTID": 19
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          145.17254299999996,
+          -16.573243000000005
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE PERMITTED BURN",
+        "OBJECTID": 20
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          140.171519,
+          -20.770496000000005
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 21
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          151.849453,
+          -24.749163000000006
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 22
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          150.370824,
+          -23.669865
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 23
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          145.470512,
+          -17.652653000000004
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE PERMITTED BURN",
+        "OBJECTID": 24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          150.42453600000002,
+          -23.597042999999996
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 25
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          151.99437299999997,
+          -27.131557000000008
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          150.31763299999997,
+          -23.811244000000002
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 27
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          142.24960999999996,
+          -10.592540000000009
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 28
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          150.37238299999999,
+          -23.72845200000001
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 29
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          150.34504399999997,
+          -23.786909
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 30
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          152.66854599999996,
+          -26.71898399999999
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 31
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          146.86372799999998,
+          -19.341738000000003
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 32
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          150.37262399999997,
+          -23.726114
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE STRUCTURE",
+        "OBJECTID": 33
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          149.84786,
+          -23.21247
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 34
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          149.22312699999998,
+          -21.46156800000001
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE PERMITTED BURN",
+        "OBJECTID": 36
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          146.776529,
+          -19.58119900000001
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 37
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          153.046178,
+          -28.150078000000008
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 38
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          146.58457500000003,
+          -19.146406999999996
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 40
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          149.433499,
+          -22.521836
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 41
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          152.18342299999998,
+          -25.299994
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 42
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          152.69403,
+          -25.516164000000014
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 43
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          153.04730499999997,
+          -26.878635
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 44
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          151.76999599999996,
+          -24.257543000000013
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE STRUCTURE",
+        "OBJECTID": 45
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          146.623365,
+          -19.224399999999996
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE PERMITTED BURN",
+        "OBJECTID": 46
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          153.064822,
+          -26.807348000000005
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 47
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          149.175821,
+          -21.146717
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE STRUCTURE",
+        "OBJECTID": 48
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          153.06056599999997,
+          -27.466650000000005
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE STRUCTURE",
+        "OBJECTID": 49
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          138.828419,
+          -17.943623
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 50
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          149.869912,
+          -23.339222
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 51
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          153.118457,
+          -26.772155999999985
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE OTHER",
+        "OBJECTID": 52
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          153.08722099999997,
+          -27.52391899999999
+        ]
+      },
+      "properties": {
+        "GroupedType": "FIRE VEGETATION",
+        "OBJECTID": 53
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "sm_coordinates": "no",
+        "coordinates": [
+          149.09996,
+          -21.472591000000005
+        ]
+      },
+      "properties": {
+        "GroupedType": "RESCUE ROAD CRASH",
+        "OBJECTID": 54
       }
     }
   ]
