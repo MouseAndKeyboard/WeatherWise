@@ -15,5 +15,5 @@ export const useChatbotStore = defineStore("chatbot", {
     setMessageContext(context: MessageContext) {
         this.botManager.messageContext = context;
     }
-  },  
+  },
 });

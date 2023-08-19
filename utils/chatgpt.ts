@@ -374,8 +374,10 @@ class ChatInstance {
       }
     }
 
+    initialPrompt += "I live in Australia, please use metric, etc. The main part of the fire is in inner Perth City, we are about 5km South from the fire. Specifically I am at 45 Saint Georges Terrace."
+
     if (demandQuestions) {
-      initialPrompt += '\nWith that context, please ask me the most important 4 questions about my personal situation so that you know how to recommend an evacuation path. Please aim to ask questions which will be helpful in tailoring your recommendations.With that context, please ask me the most important 4 questions about my current situation to prepare me for the fire/fire evacuation. Please format as dotpoints.';
+      initialPrompt += '\nWith that context, please ask me the most important 4 questions about my personal situation so that you know how to recommend an evacuation path. Please aim to ask questions which will be helpful in tailoring your recommendations.With that context, please ask me the most important 4 questions about my current situation to prepare me for the fire/fire evacuation. The fire is about 45 minutes away. Please format as dotpoints.';
     }
     
     const message: ChatCompletionRequestMessage = {
@@ -447,7 +449,7 @@ class ChatInstance {
       ]
 
     } else if (this.phase === 'recommending') {
-      const promp: ChatCompletionRequestMessage = { role: 'user', content: 'I have finished answering all the questions. Please recommend me an evacuation plan. There are 3 possible evac points: 12 Dale Road, 16 Main St, 10 Hay St.' }
+      const promp: ChatCompletionRequestMessage = { role: 'user', content: 'I have finished answering all the questions. Please recommend me an evacuation plan. There is an evacuation location at Wellingtom Street, Perth WA 6004.' }
       chathiztory.push(promp);
 
       const recommendation = await runCompletion(this.openai, chathiztory);

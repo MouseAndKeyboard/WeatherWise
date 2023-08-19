@@ -13,18 +13,25 @@ export default {
   setup() {
 
     let context: MessageContext = {
-      threatLevel: 'Advice',
-      adviceInfo: {
-        headline: 'bushfire ADVICE has been issued for people within the vicinity of Wolfe Creek Crater National Park. ',
-        lga: 'SHIRE OF HALLS CREEK',
-        alertLine: 'There is a lot of smoke in the area. Although there is no immediate danger you need to be aware and keep up to date in case the situation changes. The fire started on adjacent land next to the park.',
+      threatLevel: 'Emergency',
+      emergencyInfo: {
+        headline: 'bushfire EMERGENCY has been issued for people within the vicinity of Perth City. ',
+        lga: 'CITY OF PERTH',
+        alertLine: 'There is a lot of smoke in the area. Multiple buildings on fire evacuate immediately if possible. The fire started due to arson in Northbridge.',
+        homesUnderThreat: 'Yes'
       },
       firefighterInfo: {
-        firefighterStatus: 'monitoring the situation'
+        firefighterStatus: 'on the scene',
+        numberOfFirefighters: 28,
+        aerialSupport: 'Yes',
+        lostItems: 'Various businesses and apartment buildings',
       },
       roadClosureInfo: {
         areRoadsClosed: 'partial',
-        closedRoads: ['Wolfe Creek Acces Road is closed from Tanami Road'],
+        closedRoads: ['Saint Georges Terrace', 'William Street'],
+      },
+      otherAgencyInfo: {
+        'powerMessages': 'General power outage in the Perth area'
       }
     };
     
