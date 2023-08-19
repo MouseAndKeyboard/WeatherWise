@@ -61,3 +61,14 @@ yarn preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+
+Incident data:
+https://www.data.qld.gov.au/dataset/qfes-incident-data
+https://www.data.qld.gov.au/ckan-opendata-attachments-prod/resources/1ff2c5de-4f47-48fd-82e2-ec5b6f14e173/maina-metadata.pdf?ETag=e13f03745dd5dfc1613859ca44f54889
+
+Incident dashboard:
+https://www.qfes.qld.gov.au/Incident-Dashboard
+
+Incident dashboard arcgis:
+https://services1.arcgis.com/vkTwD8kHw2woKBqV/arcgis/rest/services/ESCAD_Current_Incidents_Public/FeatureServer/0/query?f=json&cacheHint=true&maxRecordCountFactor=4&resultOffset=0&resultRecordCount=8000&where=1%3D1&orderByFields=OBJECTID&outFields=GroupedType%2COBJECTID&outSR=102100&spatialRel=esriSpatialRelIntersects
