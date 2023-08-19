@@ -136,15 +136,16 @@ onMounted(() => {
     el.className =
       "marker w-4 h-4 bg-blue-500 rounded-full border-2 border-white";
 
-    new mapboxgl.Marker({ color: "green" })
+    new mapboxgl.Marker({ color: "red" })
       .setLngLat(messageWarnings.features[0].geometry.coordinates as LngLatLike)
       .addTo(map);
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log(position)
         let currentPos = new LngLat(
-          position.coords.longitude,
-          position.coords.latitude
+          115.8588576,
+          -31.9560394
         );
         const el = document.createElement("div");
         el.className =

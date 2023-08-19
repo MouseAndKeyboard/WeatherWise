@@ -18,10 +18,7 @@ const { $event } = useNuxtApp();
 const mapStore = useMapStore();
 
 navigator.geolocation.getCurrentPosition((position) => {
-  let currentPos = new LngLat(
-    position.coords.longitude,
-    position.coords.latitude
-  );
+  let currentPos = new LngLat(115.8588576, -31.9560394);
   mapStore.setStart(currentPos);
 });
 </script>
