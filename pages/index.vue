@@ -7,7 +7,7 @@
       <!-- <PreparationAlert /> -->
     </div>
     <AppMap class="w-full h-[calc(100svh-64px-56px)]" />
-    <NavBar />
+    <!-- <NavBar /> -->
   </main>
 </template>
 
