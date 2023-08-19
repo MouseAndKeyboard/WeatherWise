@@ -4,6 +4,7 @@
       <Bubble v-for="(message, index) in messages" :key="index" :role="message.role">
         <span v-html="message.content">
         </span>
+        <button v-if="message.hasbutton" @click="genroutehandler()" class="btn btn-md btn-primary">Generate Evacuation Route</button>
       </Bubble>
       <Bubble v-if="typing" role="assistant">
         <Typing />
@@ -91,8 +92,17 @@ async function sendMessage() {
   setTimeout(() => {
     messageContainer.value.scrollTop = messageContainer.value.scrollHeight;
   }, 500)
-  
+
+  let b = bot.phase == "reccomending"
   let received = await callAI(messages.value);
+
+  if (b) {
+    // we need to display the "generate route" button.
+    received[0].hasbutton = true;
+  } else {
+    received[0].hasbutton = false;
+  }
+
   messages.value = [...messages.value, received[0]];
 
   option1.value = received[1].content
@@ -177,6 +187,11 @@ async function callAI(messages: ChatCompletionRequestMessage[]) {
 
 function setOption(option: string) {
   messageText.value = option
+}
+
+function genroutehandler() {
+  console.log("generating route")
+  useRouter().push('/')
 }
 
 function log(typing: boolean) {

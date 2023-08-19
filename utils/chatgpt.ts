@@ -6,10 +6,18 @@ import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
 // const openai = new OpenAIApi(configuration);
 
 const runCompletion = async (openai: OpenAIApi, history: ChatCompletionRequestMessage[]) => {
+
+  let cleanhist = [];
+  // go through each element in the history and delete any fields other than content and role
+  for (let i = 0; i < history.length; i++) {
+    const element = history[i];
+    cleanhist.push({ role: element.role, content: element.content });
+  }
+
   try {
     const completion = await openai.createChatCompletion({
       "model": "gpt-3.5-turbo",
-      "messages": history
+      "messages": cleanhist
     });
 
     console.log(completion);
