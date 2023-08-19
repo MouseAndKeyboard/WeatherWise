@@ -16,7 +16,7 @@ const runCompletion = async (openai: OpenAIApi, history: ChatCompletionRequestMe
 
   try {
     const completion = await openai.createChatCompletion({
-      "model": "gpt-3.5-turbo",
+      "model": "gpt-4",
       "messages": cleanhist
     });
 
@@ -374,7 +374,7 @@ class ChatInstance {
       }
     }
 
-    initialPrompt += "I live in Australia, please use metric, etc. The main part of the fire is in inner Perth City, we are about 5km South from the fire. Specifically I am at 45 Saint Georges Terrace."
+    initialPrompt += "I live in Australia, please use metric, etc. The main part of the fire is in inner Perth City, we are about 5km South from the fire. Specifically I am at 45 Saint Georges Terrace. I know no more specific information about the fire or surrounding stuff. But I can tell you about my current situation."
 
     if (demandQuestions) {
       initialPrompt += '\nWith that context, please ask me the most important 4 questions about my personal situation so that you know how to recommend an evacuation path. Please aim to ask questions which will be helpful in tailoring your recommendations.With that context, please ask me the most important 4 questions about my current situation to prepare me for the fire/fire evacuation. The fire is about 45 minutes away. Please format as dotpoints.';
@@ -450,9 +450,9 @@ class ChatInstance {
 
     } else if (this.phase === 'recommending') {
       const promp: ChatCompletionRequestMessage = { role: 'user', content: 'I have finished answering all the questions. Please recommend me an evacuation plan. There is an evacuation location at Wellingtom Street, Perth WA 6004.' }
-      chathiztory.push(promp);
+      // chathiztory.push(promp);
 
-      const recommendation = await runCompletion(this.openai, chathiztory);
+      const recommendation = await runCompletion(this.openai, [...chathiztory, promp]);
       const three: ChatCompletionRequestMessage[] = [promp, { 'role': 'assistant', 'content': recommendation?.content }, {'role': 'user', 'content': 'Okay, based on this plan, please come up with 3 possible follow up questions. Dot points only.'}];
       const rezult = await runCompletion(this.openai, three);
 
