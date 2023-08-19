@@ -72,3 +72,8 @@ https://www.qfes.qld.gov.au/Incident-Dashboard
 
 Incident dashboard arcgis:
 https://services1.arcgis.com/vkTwD8kHw2woKBqV/arcgis/rest/services/ESCAD_Current_Incidents_Public/FeatureServer/0/query?f=json&cacheHint=true&maxRecordCountFactor=4&resultOffset=0&resultRecordCount=8000&where=1%3D1&orderByFields=OBJECTID&outFields=GroupedType%2COBJECTID&outSR=102100&spatialRel=esriSpatialRelIntersects
+
+Here's also the dashboard:
+https://livingatlas-dcdev.opendata.arcgis.com/datasets/publicsafetyqld::qfes-current-incidents-public-view/explore
+Which is licensed under Creative Commons Attribution 4.0 licence.
+https://www.qfes.qld.gov.au/copyright
