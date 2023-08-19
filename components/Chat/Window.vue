@@ -8,7 +8,7 @@
       >
         <span v-html="message.content"></span>
         <br />
-        <button v-if="message.hasbutton" @click="genroutehandler()" class="btn btn-md btn-primary">Generate Evacuation Route</button>
+        <button v-if="message.hasbutton" @click="genroutehandler()" class="btn btn-md btn-primary bg-red-500 border border-red-800 hover:bg-red-600 hover:border hover:border-red-800">Generate Evacuation Route</button>
       </Bubble>
       <Bubble v-if="typing" role="assistant">
         <Typing />
