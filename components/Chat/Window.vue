@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full overflow-hidden bg-black shadow shadow-gray-600">
+  <div class="flex flex-col w-full overflow-hidden bg-[#e1e1e1]">
     <div class="flex flex-col w-full h-full py-8 space-y-4 overflow-x-hidden overflow-y-auto messages scroll-smooth" ref="messageContainer">
       <Bubble v-for="(message, index) in messages" :key="index" :role="message.role">
         <span v-html="message.content">
@@ -11,15 +11,15 @@
     </div>
 
     <div class="flex flex-col mb-2 space-y-2">
-        <button v-text="option1" @click="setOption(option1)" class="w-full p-2 text-white bg-blue-500 rounded-md"></button>
-        <button v-text="option2" @click="setOption(option2)" class="w-full p-2 text-white bg-blue-500 rounded-md"></button>
-        <button v-text="option3" @click="setOption(option3)" class="w-full p-2 text-white bg-blue-500 rounded-md"></button>
+        <button v-if="option1" v-text="option1" @click="setOption(option1)" class="w-full p-2 text-black bg-white rounded-md"></button>
+        <button v-if="option2" v-text="option2" @click="setOption(option2)" class="w-full p-2 text-black bg-white rounded-md"></button>
+        <button v-if="option3" v-text="option3" @click="setOption(option3)" class="w-full p-2 text-black bg-white rounded-md"></button>
     </div>
 
 
 
     <form @submit.prevent="sendMessage" class="flex items-center mt-auto h-[10vh]">
-      <button @click.prevent="toggleRecording" class="rounded-none btn btn-md btn-primary">
+      <button @click.prevent="toggleRecording" class="rounded-none btn btn-md btn-primary bg-blue-400 border border-blue-800 hover:bg-blue-500">
         <div class="">
           <MicrophoneIcon v-if="recording" class="w-5 h-5 text-red-500" />
           <MicrophoneIcon v-else class="w-5 h-5 fill-white" />
@@ -27,11 +27,11 @@
 
       </button>
       <input v-model="messageText" type="text"
-        class="w-full h-10 px-3 py-6 text-purple-200 transition-all duration-150 ease-in-out bg-gray-900 border border-gray-900 outline-none placeholder:text-gray-600 focus:outline-none focus:border-purple-600"
-        placeholder="Enter your message here ..." />
-      <button class="rounded-none btn btn-md btn-primary">
-        <PaperAirplaneIcon v-if="typing" class="w-6 h-6 -rotate-45 text-gray-500" />
-        <PaperAirplaneIcon v-else class="w-6 h-6 -rotate-45 fill-white" />
+        class="w-full h-10 px-3 py-6 text-black transition-all duration-150 ease-in-out bg-gray-50 border border-gray-500 outline-none placeholder:text-gray-600 focus:outline-none focus:border-gray-900"
+        placeholder="Enter your message here ..." 
+        @keydown.enter.prevent="sendMessage"/>
+      <button class="rounded-none btn btn-md btn-primary bg-blue-400 border border-blue-800 hover:bg-blue-500">
+        <PaperAirplaneIcon class="w-6 h-6 -rotate-45 fill-white" />
       </button>
     </form>
   </div>
