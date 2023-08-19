@@ -203,7 +203,7 @@ function setOption(option: string) {
 function genroutehandler() {
   const mapStore = useMapStore()
   mapStore.setStatus(MapStatus.GENERATE_ROUTE)
-  mapStore.setEnd(new LngLat(115.855991,-31.955817))
+  mapStore.setEnd(new LngLat(115.872650, -31.954604));
   console.log("generating route")
 
   useRouter().push('/')
