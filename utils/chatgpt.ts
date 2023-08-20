@@ -1,4 +1,5 @@
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
+const runtimeConfig = useRuntimeConfig()
 
 // const configuration = new Configuration({
 //   apiKey: process.env.OPENAI_API_KEY,
@@ -27,86 +28,6 @@ const runCompletion = async (openai: OpenAIApi, history: ChatCompletionRequestMe
     console.error(error);
   }
 }
-
-interface FireBehavior {
-  fireSpeed?: 'fast' | 'slow';
-  fireDirection?: 'N' | 'NE' | 'E' | 'SE' | 'S' | 'SW' | 'W' | 'NW';
-  fireSpeedExact?: number;
-  fireType?: 'smallControllable' | 'outOfControlUnpredictable' | 'ContainedButNotControlled' | 'ControlledButNotContained' | 'ContainedAndUnderControl' | 'Unpredictable';
-  fireFrontSize?: number;
-  fireHeight?: 'higherThanRooftops' | 'BurningIntoTreetops';
-  windChangeExpected?: 'No' | 'YesWindShift' | 'YesWindChange';
-  windChangeTime?: number;
-  currentWindDirection?: 'N' | 'NE' | 'E' | 'SE' | 'S' | 'SW' | 'W' | 'NW';
-  forecastWindDirection?: 'N' | 'NE' | 'E' | 'SE' | 'S' | 'SW' | 'W' | 'NW';
-  emberAttack?: 'No' | 'Yes' | string; // string can be used to specify the distance of spot fires
-  potentialThreat?: string; // freetext field for potential threats
-  catastrophicFireDanger?: 'yes' | 'no';
-  additionalInfo?: string; // freetext field for additional information
-}
-
-interface FirefighterInfo {
-  firefighterStatus?: 'on their way' | 'on the scene' | 'patrolling the area and mopping up' | 'strengthening containment lines' | 'actively fighting the fire' | 'monitoring the situation' | 'monitoring the area for the rest of the day/night' | string; // string can be used to input the specific street names
-  numberOfFirefighters?: number;
-  typeOfFirefighters?: 'FRS' | 'VFRS' | 'VFES' | 'BFS' | 'DBCA' | 'Pastoralists';
-  aerialSupport?: 'Yes' | 'No' | 'protecting crews and homes' | 'assisting ground crews' | 'released from incident';
-  savedItems?: string; // freetext field for what has been saved
-  lostItems?: string; // freetext field for what has been lost
-  canInfoBeReleased?: 'yes' | 'no';
-  otherStakeholders?: 'SES' | 'WA Police' | 'St John Ambulance' | 'Local Govt' | 'Other' | string; // string can be used to specify other stakeholders
-}
-
-interface RoadClosureInfo {
-  areRoadsClosed?: 'yes' | 'no' | 'partial';
-  closedRoads?: string[]; // array of road names
-}
-
-interface OtherAgencyInfo {
-  healthMessages?: string; // freetext field for health messages
-  powerMessages?: string; // freetext field for power messages
-  waterMessages?: string; // freetext field for water messages
-  telecommunicationsMessages?: string; // freetext field for telecommunications messages
-  schoolMessages?: string; // freetext field for school messages
-  insuranceMessage?: string; // freetext field for insurance messages
-  redCrossLineActivated?: 'yes' | 'no';
-}
-
-interface EmergencyInfo {
-  headline?: string; // freetext field for headline, e.g., "Bushfire Emergency Warning for eastern part of Suburb X"
-  lga?: string; // freetext field for Local Government Area (LGA)
-  alertLine?: string; // freetext field for the description of the affected warning area
-  safeToLeave?: 'Yes' | 'No';
-  sewsUsed?: 'Yes' | 'No'; // SEWS: Standard Emergency Warning Signal
-  telephoneWarningIssued?: 'Yes' | 'No';
-  homesUnderThreat?: 'Yes' | 'No' | string; // string can be used to specify the number of hours and what streets
-  alertLevelUpgraded?: 'Yes' | 'No';
-  upgradeReason?: string; // freetext field for the reason for alert level upgrade
-}
-
-interface WatchAndActInfo {
-  headline?: string; // freetext field for headline
-  lga?: string; // freetext field for Local Government Area (LGA)
-  alertLine?: string; // freetext field for the description of the affected warning area
-  safeToActivelyDefend?: 'Yes' | 'No';
-  safeToLeave?: 'Yes' | 'No';
-  alertLevelChange?: 'No' | 'Yes';
-  changeReason?: string; // freetext field for reason of the alert level change
-  evacuationCentreSetup?: 'No' | 'Yes';
-  evacuationCentreLocation?: string; // freetext field for location of evacuation centre
-  lastResortPlaceDesignated?: 'No' | 'Yes';
-  lastResortPlaceLocation?: string; // freetext field for location of last resort place
-  safestRouteToLeave?: string; // freetext field for the safest route to leave
-}
-
-interface AdviceInfo {
-  headline?: string; // freetext field for headline
-  lga?: string; // freetext field for Local Government Area (LGA)
-  alertLine?: string; // freetext field for the description of the affected warning area
-  nearHomesMessages?: string; // freetext field for messages related to being near homes or driving
-  isSmokePresent?: 'Yes' | 'No';
-  alertLevelDowngraded?: 'Yes' | 'No';
-}
-
 
 interface Feature {
   type: String;
@@ -157,8 +78,9 @@ class ChatInstance {
   initialise() {
     console.log("initialising openai");
     this.openai = new OpenAIApi(new Configuration({
-      apiKey: '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',
+      apiKey: runtimeConfig.public.oai_key,
     }));
+    console.log(runtimeConfig.public.oai_key);
   }
 
   receiveMessage(message: string) {

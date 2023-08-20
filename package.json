@@ -11,12 +11,13 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@types/dotenv": "^8.2.0",
     "@types/node": "^18",
     "autoprefixer": "^10.4.14",
+    "daisyui": "^2.6.3",
     "nuxt": "^3.5.2",
     "postcss": "^8.4.24",
-    "tailwindcss": "^3.3.2",
-    "daisyui": "^2.6.3"
+    "tailwindcss": "^3.3.2"
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.16",
@@ -25,6 +26,7 @@
     "@pinia/nuxt": "^0.4.11",
     "@turf/turf": "^6.5.0",
     "@types/mapbox-gl": "^2.7.11",
+    "dotenv": "^16.3.1",
     "mapbox-gl": "^2.15.0",
     "mitt": "^3.0.0",
     "openai": "^3.3.0",

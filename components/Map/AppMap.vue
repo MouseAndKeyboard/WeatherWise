@@ -16,12 +16,14 @@ import messageWarnings from "@/data/message_warnings.json";
 import * as turf from "@turf/turf";
 import * as polyline from "@mapbox/polyline";
 import { MapStatus, useMapStore } from "@/stores/mapStore";
+import { useRuntimeConfig } from "nuxt/app";
 
-const accessToken =
-  "pk.eyJ1IjoiY2puYmVubmV0dCIsImEiOiJjbGhsaTRxc2EwOWw3M3FwOTQ0N3luaW5qIn0.8XbLwV61cr2oFs7ue0wCCw";
-const westernAustralia: [number, number] = [121.8997, -25.5528];
+const runtimeConfig = useRuntimeConfig();
+
+const accessToken = runtimeConfig.public.mb_key;
+const westernAustralia: [number, number] = [150.8997, -25];
 const bounds: [number, number, number, number] = [
-  104.9211, -42.1406, 136.0019, -6.6683,
+  144.9211, -30.1406, 160.0019, -25.6683,
 ];
 
 mapboxgl.accessToken = accessToken;
@@ -31,7 +33,7 @@ const mapStore = useMapStore();
 onMounted(() => {
   const map = new mapboxgl.Map({
     container: "map",
-    style: "mapbox://styles/mapbox/satellite-v9",
+    style: "mapbox://styles/mapbox/outdoors-v12",
     center: westernAustralia,
     maxBounds: bounds,
     minZoom: 0,
@@ -136,16 +138,30 @@ onMounted(() => {
     el.className =
       "marker w-4 h-4 bg-blue-500 rounded-full border-2 border-white";
 
-    new mapboxgl.Marker({ color: "red" })
-      .setLngLat(messageWarnings.features[0].geometry.coordinates as LngLatLike)
-      .addTo(map);
+    const escad_incidents_url = "https://services1.arcgis.com/vkTwD8kHw2woKBqV/arcgis/rest/services/ESCAD_Current_Incidents_Public/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson"
+    
+    fetch(escad_incidents_url) 
+      .then(response => response.json())
+      .then(data => {
+        data.features.forEach(feature => {
+          new mapboxgl.Marker({ color: "red"})
+            .setLngLat(feature.geometry.coordinates as LngLatLike)
+            .addTo(map);
+        });
+      });
+
+    // messageWarnings.features.forEach(feature => {
+    //   new mapboxgl.Marker({ color: "red"})
+    //     .setLngLat(feature.geometry.coordinates as LngLatLike)
+    //     .addTo(map);
+    // });
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log(position)
         let currentPos = new LngLat(
-          115.8588576,
-          -31.9560394
+          152.9211,
+          -27.7406
         );
         const el = document.createElement("div");
         el.className =
