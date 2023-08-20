@@ -12,28 +12,7 @@ import { ChatInstance, MessageContext } from '../../utils/chatgpt';
 export default {
   setup() {
 
-    let context: MessageContext = {
-      threatLevel: 'Emergency',
-      emergencyInfo: {
-        headline: 'bushfire EMERGENCY has been issued for people within the vicinity of Perth City. ',
-        lga: 'CITY OF PERTH',
-        alertLine: 'There is a lot of smoke in the area. Multiple buildings on fire evacuate immediately if possible. The fire started due to arson in Northbridge.',
-        homesUnderThreat: 'Yes'
-      },
-      firefighterInfo: {
-        firefighterStatus: 'on the scene',
-        numberOfFirefighters: 28,
-        aerialSupport: 'Yes',
-        lostItems: 'Various businesses and apartment buildings',
-      },
-      roadClosureInfo: {
-        areRoadsClosed: 'partial',
-        closedRoads: ['Saint Georges Terrace', 'William Street'],
-      },
-      otherAgencyInfo: {
-        'powerMessages': 'General power outage in the Perth area'
-      }
-    };
+    let context: MessageContext = [];
     
     const chatGPT = new ChatInstance(context);
 
