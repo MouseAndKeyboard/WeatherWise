@@ -77,3 +77,6 @@ Here's also the dashboard:
 https://livingatlas-dcdev.opendata.arcgis.com/datasets/publicsafetyqld::qfes-current-incidents-public-view/explore
 Which is licensed under Creative Commons Attribution 4.0 licence.
 https://www.qfes.qld.gov.au/copyright
+
+Then this:
+https://services1.arcgis.com/vkTwD8kHw2woKBqV/arcgis/rest/services/ESCAD_Current_Incidents_Public/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson
