@@ -107,17 +107,34 @@ interface AdviceInfo {
   alertLevelDowngraded?: 'Yes' | 'No';
 }
 
-interface MessageContext {
-  threatLevel: 'Emergency' | 'WatchAndAct' | 'Advice';
-  emergencyInfo?: EmergencyInfo;
-  watchAndActInfo?: WatchAndActInfo;
-  adviceInfo?: AdviceInfo;
 
-  bushfireBehavior?: FireBehavior;
-  firefighterInfo?: FirefighterInfo;
-  roadClosureInfo?: RoadClosureInfo;
-  otherAgencyInfo?: OtherAgencyInfo;
+interface Feature {
+  type: String;
+  id: Number;
+  geometry: {
+    type: String;
+    coordinates: [Number, Number];
+  },
+  properties: {
+    OBJECTID: Number;
+    Master_Incident_Number: String;
+    Response_Date: Number;
+    LastUpdate: Number; 
+    CurrentStatus: String;
+    Location: String;
+    Jurisdiction: String;
+    Latitude: Number;
+    Longitude: Number;
+    VehiclesAssigned: Number; 
+    VehiclesOnRoute: Number; 
+    VehiclesOnScene: Number;
+    FMETimestamp: Number;
+    GroupedType: String;
+    Locality: String;
+  }
 }
+
+type MessageContext = Feature[]; 
 
 class ChatInstance {
   chatHistory: ChatCompletionRequestMessage[];
@@ -140,7 +157,7 @@ class ChatInstance {
   initialise() {
     console.log("initialising openai");
     this.openai = new OpenAIApi(new Configuration({
-      apiKey: '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',
+      apiKey: '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',
     }));
   }
 
@@ -149,232 +166,25 @@ class ChatInstance {
   }
 
   getInitialMessage(demandQuestions = false): ChatCompletionRequestMessage {
-    let initialPrompt = "I'm currently in a situation where ";
+    let initialPrompt = `I am looking at map of ongoing incidents near me. There are ${this.messageContext.length} incidents near me.`; 
 
-    switch (this.messageContext.threatLevel) {
-      case 'Emergency':
-        initialPrompt += 'there\'s an emergency warning (life and property are under threat). ';
-        break;
-      case 'WatchAndAct':
-        initialPrompt += 'a watch and act alert has been issued (possible life and property are under threat). ';
-        break;
-      case 'Advice':
-        initialPrompt += 'I\'ve received an advice message (no life and property under threat). ';
-        break;
-    }
+    
 
-    if (this.messageContext.bushfireBehavior) {
-      initialPrompt += 'Here\'s what I know about the bushfire behavior: ';
-      if (this.messageContext.bushfireBehavior.fireSpeed) {
-        initialPrompt += `The fire speed is reported to be ${this.messageContext.bushfireBehavior.fireSpeed}. `;
-      }
-      if (this.messageContext.bushfireBehavior.fireDirection) {
-        initialPrompt += `The fire is moving in the ${this.messageContext.bushfireBehavior.fireDirection} direction. `;
-      }
-      if (this.messageContext.bushfireBehavior.fireSpeedExact) {
-        initialPrompt += `The exact speed of the fire is ${this.messageContext.bushfireBehavior.fireSpeedExact} kms/hr. `;
-      }
-      if (this.messageContext.bushfireBehavior.fireType) {
-        initialPrompt += `The fire type is described as ${this.messageContext.bushfireBehavior.fireType}. `;
-      }
-      if (this.messageContext.bushfireBehavior.fireFrontSize) {
-        initialPrompt += `The fire front is reported to be ${this.messageContext.bushfireBehavior.fireFrontSize} kms wide. `;
-      }
-      if (this.messageContext.bushfireBehavior.fireHeight) {
-        initialPrompt += `The fire height is said to be ${this.messageContext.bushfireBehavior.fireHeight}. `;
-      }
-      if (this.messageContext.bushfireBehavior.windChangeExpected) {
-        initialPrompt += `Wind change is expected: ${this.messageContext.bushfireBehavior.windChangeExpected}. `;
-      }
-      if (this.messageContext.bushfireBehavior.windChangeTime) {
-        initialPrompt += `The expected time for wind change is in ${this.messageContext.bushfireBehavior.windChangeTime} minutes. `;
-      }
-      if (this.messageContext.bushfireBehavior.currentWindDirection) {
-        initialPrompt += `The current wind direction is ${this.messageContext.bushfireBehavior.currentWindDirection}. `;
-      }
-      if (this.messageContext.bushfireBehavior.forecastWindDirection) {
-        initialPrompt += `The forecasted wind direction is ${this.messageContext.bushfireBehavior.forecastWindDirection}. `;
-      }
-      if (this.messageContext.bushfireBehavior.emberAttack) {
-        initialPrompt += `Regarding ember attack, the report says: ${this.messageContext.bushfireBehavior.emberAttack}. `;
-      }
-      if (this.messageContext.bushfireBehavior.potentialThreat) {
-        initialPrompt += `The potential threats are: ${this.messageContext.bushfireBehavior.potentialThreat}. `;
-      }
-      if (this.messageContext.bushfireBehavior.catastrophicFireDanger) {
-        initialPrompt += `Is there a catastrophic fire danger in place? ${this.messageContext.bushfireBehavior.catastrophicFireDanger}. `;
-      }
-      if (this.messageContext.bushfireBehavior.additionalInfo) {
-        initialPrompt += `Additional information: ${this.messageContext.bushfireBehavior.additionalInfo}. `;
-      }
-    }
+    for (let i = 0; i < this.messageContext.length; i++) {
+      const incident = this.messageContext[i];
+      initialPrompt += `\nIncident ${i + 1}.\n`;
 
-    if (this.messageContext.firefighterInfo) {
-      initialPrompt += '\nAs for the firefighters: ';
-      if (this.messageContext.firefighterInfo.firefighterStatus) {
-        initialPrompt += `The firefighters are ${this.messageContext.firefighterInfo.firefighterStatus}. `;
-      }
-      if (this.messageContext.firefighterInfo.numberOfFirefighters) {
-        initialPrompt += `There are ${this.messageContext.firefighterInfo.numberOfFirefighters} firefighters. `;
-      }
-      if (this.messageContext.firefighterInfo.typeOfFirefighters) {
-        initialPrompt += `The type of firefighters present are ${this.messageContext.firefighterInfo.typeOfFirefighters}. `;
-      }
-      if (this.messageContext.firefighterInfo.aerialSupport) {
-        initialPrompt += `Aerial support: ${this.messageContext.firefighterInfo.aerialSupport}. `;
-      }
-      if (this.messageContext.firefighterInfo.savedItems) {
-        initialPrompt += `They've managed to save: ${this.messageContext.firefighterInfo.savedItems}. `;
-      }
-      if (this.messageContext.firefighterInfo.lostItems) {
-        initialPrompt += `Sadly, some things were lost to the fire: ${this.messageContext.firefighterInfo.lostItems}. `;
-      }
-      if (this.messageContext.firefighterInfo.otherStakeholders) {
-        initialPrompt += `Other stakeholders in attendance are ${this.messageContext.firefighterInfo.otherStakeholders}. `;
-      }
-    }
+      const properties = incident.properties;
 
-    if (this.messageContext.otherAgencyInfo) {
-      initialPrompt += '\nAs for other agency information: ';
-      if (this.messageContext.otherAgencyInfo.healthMessages) {
-        initialPrompt += `Health messages: ${this.messageContext.otherAgencyInfo.healthMessages}. `;
-      }
-      if (this.messageContext.otherAgencyInfo.powerMessages) {
-        initialPrompt += `Power messages: ${this.messageContext.otherAgencyInfo.powerMessages}. `;
-      }
-      if (this.messageContext.otherAgencyInfo.waterMessages) {
-        initialPrompt += `Water messages: ${this.messageContext.otherAgencyInfo.waterMessages}. `;
-      }
-      if (this.messageContext.otherAgencyInfo.telecommunicationsMessages) {
-        initialPrompt += `Telecommunications messages: ${this.messageContext.otherAgencyInfo.telecommunicationsMessages}. `;
-      }
-      if (this.messageContext.otherAgencyInfo.schoolMessages) {
-        initialPrompt += `School messages: ${this.messageContext.otherAgencyInfo.schoolMessages}. `;
-      }
-      if (this.messageContext.otherAgencyInfo.insuranceMessage) {
-        initialPrompt += `Insurance message: ${this.messageContext.otherAgencyInfo.insuranceMessage}. `;
-      }
-      if (this.messageContext.otherAgencyInfo.redCrossLineActivated) {
-        initialPrompt += `Is the Red Cross State Enquiry Line activated? ${this.messageContext.otherAgencyInfo.redCrossLineActivated}. `;
-      }
-    }
+      initialPrompt += `Incident type: ${properties.GroupedType}\n`;
+      initialPrompt += `Location: ${properties.Location}\n`;
+      initialPrompt += `Number of Firetrucks assigned to the incident: ${properties.VehiclesAssigned}\n`;
+      initialPrompt += `Number of Firetrucks on route to the incidnet: ${properties.VehiclesOnRoute}\n`;
+      initialPrompt += `Number of Firetrucks at the scene: ${properties.VehiclesOnScene}\n`;
+      initialPrompt += `\n`;
+    }    
 
-    if (this.messageContext.roadClosureInfo) {
-      initialPrompt += '\nRegarding road closures: ';
-      if (this.messageContext.roadClosureInfo.areRoadsClosed) {
-        initialPrompt += `Roads are currently ${this.messageContext.roadClosureInfo.areRoadsClosed}. `;
-      }
-      if (this.messageContext.roadClosureInfo.closedRoads && this.messageContext.roadClosureInfo.closedRoads.length > 0) {
-        const roadList = this.messageContext.roadClosureInfo.closedRoads.join(', ');
-        initialPrompt += `The following roads are closed: ${roadList}. `;
-      }
-    }
-
-    if (this.messageContext.emergencyInfo) {
-      initialPrompt += '\nOn the emergency status: ';
-
-      if (this.messageContext.emergencyInfo.headline) {
-        initialPrompt += `The current headline is "${this.messageContext.emergencyInfo.headline}". `;
-      }
-
-      if (this.messageContext.emergencyInfo.lga) {
-        initialPrompt += `This is happening in ${this.messageContext.emergencyInfo.lga}. `;
-      }
-
-      if (this.messageContext.emergencyInfo.alertLine) {
-        initialPrompt += `The alert line states "${this.messageContext.emergencyInfo.alertLine}". `;
-      }
-
-      if (this.messageContext.emergencyInfo.safeToLeave) {
-        initialPrompt += `It is currently ${this.messageContext.emergencyInfo.safeToLeave === 'Yes' ? '' : 'not'} safe to leave. `;
-      }
-
-      if (this.messageContext.emergencyInfo.sewsUsed) {
-        initialPrompt += `The Standard Emergency Warning Signal has ${this.messageContext.emergencyInfo.sewsUsed === 'Yes' ? '' : 'not'} been used. `;
-      }
-
-      if (this.messageContext.emergencyInfo.telephoneWarningIssued) {
-        initialPrompt += `A telephone warning has ${this.messageContext.emergencyInfo.telephoneWarningIssued === 'Yes' ? '' : 'not'} been issued. `;
-      }
-
-      if (this.messageContext.emergencyInfo.homesUnderThreat) {
-        initialPrompt += `Homes are ${this.messageContext.emergencyInfo.homesUnderThreat === 'Yes' ? '' : 'not'} under threat. `;
-        if (typeof this.messageContext.emergencyInfo.homesUnderThreat === 'string') {
-          initialPrompt += `Specifically, ${this.messageContext.emergencyInfo.homesUnderThreat}. `;
-        }
-      }
-
-      if (this.messageContext.emergencyInfo.alertLevelUpgraded) {
-        initialPrompt += `The alert level has ${this.messageContext.emergencyInfo.alertLevelUpgraded === 'Yes' ? '' : 'not'} been upgraded. `;
-        if (this.messageContext.emergencyInfo.upgradeReason) {
-          initialPrompt += `Reason for upgrade: ${this.messageContext.emergencyInfo.upgradeReason}. `;
-        }
-      }
-    }
-
-    if (this.messageContext.watchAndActInfo) {
-      initialPrompt += '\nOn the watch and act status: ';
-
-      if (this.messageContext.watchAndActInfo.headline) {
-        initialPrompt += `The headline for this event is "${this.messageContext.watchAndActInfo.headline}".\n`;
-      }
-      if (this.messageContext.watchAndActInfo.lga) {
-        initialPrompt += `This is happening in the local government area of ${this.messageContext.watchAndActInfo.lga}.\n`;
-      }
-      if (this.messageContext.watchAndActInfo.alertLine) {
-        initialPrompt += `The alert line reads: "${this.messageContext.watchAndActInfo.alertLine}".\n`;
-      }
-      if (this.messageContext.watchAndActInfo.safeToActivelyDefend) {
-        initialPrompt += `It is ${this.messageContext.watchAndActInfo.safeToActivelyDefend.toLowerCase()} to actively defend your home.\n`;
-      }
-      if (this.messageContext.watchAndActInfo.safeToLeave) {
-        initialPrompt += `It is ${this.messageContext.watchAndActInfo.safeToLeave.toLowerCase()} to leave the area.\n`;
-      }
-      if (this.messageContext.watchAndActInfo.alertLevelChange) {
-        initialPrompt += `The alert level has been ${this.messageContext.watchAndActInfo.alertLevelChange.toLowerCase()}.\n`;
-      }
-      if (this.messageContext.watchAndActInfo.changeReason) {
-        initialPrompt += `The reason for this change is: ${this.messageContext.watchAndActInfo.changeReason}.\n`;
-      }
-      if (this.messageContext.watchAndActInfo.evacuationCentreSetup) {
-        initialPrompt += `A temporary evacuation centre has been ${this.messageContext.watchAndActInfo.evacuationCentreSetup.toLowerCase()}.\n`;
-      }
-      if (this.messageContext.watchAndActInfo.evacuationCentreLocation) {
-        initialPrompt += `The location of the evacuation centre is: ${this.messageContext.watchAndActInfo.evacuationCentreLocation}.\n`;
-      }
-      if (this.messageContext.watchAndActInfo.lastResortPlaceDesignated) {
-        initialPrompt += `A safer place of last resort has been ${this.messageContext.watchAndActInfo.lastResortPlaceDesignated.toLowerCase()}.\n`;
-      }
-      if (this.messageContext.watchAndActInfo.lastResortPlaceLocation) {
-        initialPrompt += `The location of the safer place is: ${this.messageContext.watchAndActInfo.lastResortPlaceLocation}.\n`;
-      }
-      if (this.messageContext.watchAndActInfo.safestRouteToLeave) {
-        initialPrompt += `The safest route to leave is: ${this.messageContext.watchAndActInfo.safestRouteToLeave}.\n`;
-      }
-    }
-
-    if (this.messageContext.adviceInfo) {
-      if (this.messageContext.adviceInfo.headline) {
-        initialPrompt += `The headline for this event is "${this.messageContext.adviceInfo.headline}".\n`;
-      }
-      if (this.messageContext.adviceInfo.lga) {
-        initialPrompt += `This is happening in the local government area of ${this.messageContext.adviceInfo.lga}.\n`;
-      }
-      if (this.messageContext.adviceInfo.alertLine) {
-        initialPrompt += `The alert line reads: "${this.messageContext.adviceInfo.alertLine}".\n`;
-      }
-      if (this.messageContext.adviceInfo.nearHomesMessages) {
-        initialPrompt += `There are messages for those near homes or driving: ${this.messageContext.adviceInfo.nearHomesMessages}.\n`;
-      }
-      if (this.messageContext.adviceInfo.isSmokePresent) {
-        initialPrompt += `There is ${this.messageContext.adviceInfo.isSmokePresent.toLowerCase()} smoke in the area.\n`;
-      }
-      if (this.messageContext.adviceInfo.alertLevelDowngraded) {
-        initialPrompt += `The alert level has been ${this.messageContext.adviceInfo.alertLevelDowngraded.toLowerCase()}.\n`;
-      }
-    }
-
-    initialPrompt += "I live in Australia, please use metric, etc. The main part of the fire is in inner Perth City, we are about 5km South from the fire. Specifically I am at 45 Saint Georges Terrace. I know no more specific information about the fire or surrounding stuff. But I can tell you about my current situation."
+    initialPrompt += "I live in Australia, please use metric, etc. I know no more specific information about the fire or surrounding information. But I can tell you about my current situation."
 
     if (demandQuestions) {
       initialPrompt += '\nWith that context, please ask me the most important 4 questions about my personal situation so that you know how to recommend an evacuation path. Please aim to ask questions which will be helpful in tailoring your recommendations.With that context, please ask me the most important 4 questions about my current situation to prepare me for the fire/fire evacuation. The fire is about 45 minutes away. Please format as dotpoints.';
